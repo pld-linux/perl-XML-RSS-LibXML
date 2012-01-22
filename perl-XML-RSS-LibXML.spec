@@ -8,13 +8,13 @@
 Summary:	XML::RSS::LibXML - XML::RSS with XML::LibXML
 Summary(pl.UTF-8):	XML::RSS::LibXML - XML::RSS z XML::LibXML
 Name:		perl-XML-RSS-LibXML
-Version:	0.30_02
+Version:	0.3102
 Release:	1
 # same as perl
 License:	GPL v1+ or Artistic
 Group:		Development/Languages/Perl
 Source0:	http://www.cpan.org/modules/by-authors/id/D/DM/DMAKI/%{pdir}-%{pnam}-%{version}.tar.gz
-# Source0-md5:	5fcf799fea80268817a268d14519459f
+# Source0-md5:	9fbc00ce70c200a22dd6438e8679d174
 URL:		http://search.cpan.org/dist/XML-RSS-LibXML/
 BuildRequires:	perl-devel >= 1:5.8.0
 BuildRequires:	rpm-perlprov >= 4.1-13
@@ -59,20 +59,20 @@ Tego modułu można używać jeśli mamy ostre wymagania co do wydajności
 przy pracy z plikami RSS.
 
 %prep
-%setup -q -n %{pdir}-%{pnam}-0.30
+%setup -q -n %{pdir}-%{pnam}-%{version}
 
 %build
-%{__perl} Build.PL \
-	destdir=$RPM_BUILD_ROOT \
-	installdirs=vendor
-./Build
+%{__perl} Makefile.PL \
+	INSTALLDIRS=vendor
+%{__make}
 
-%{?with_tests:./Build test}
+%{?with_tests:%{__make} test}
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
-./Build install
+%{__make} install \
+	DESTDIR=$RPM_BUILD_ROOT
 
 %clean
 rm -rf $RPM_BUILD_ROOT
